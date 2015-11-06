@@ -1,0 +1,83 @@
+@charset "utf-8";
+/* CSS Document */
+
+#topMenu
+{
+	background: rgba(255, 255, 255, .4);		
+	height: 10%;
+	width: 69.3%;
+	float:left;
+	position:fixed;
+	margin-left:5px;
+	left: 0%;
+	top: 0%;
+	z-index: -1;
+}
+
+#dpHolder
+{
+	background:rgba(255,255,255,.8);
+	height:64px;
+	width:64px;
+	margin:12px;
+	position:relative;
+	float:left;	
+}
+
+#profileDet
+{
+	background:rgba(179,179,179,.4);
+	height:64px;
+	width:250px;	
+	margin-top:12px;
+	position:relative;
+	float:left;
+	
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10.5px;
+	font-style:italic;
+	font-weight:normal;
+	color:#333333;
+}
+
+
+
+/**************************************************apps field***************************************/
+/**************************************************apps field***************************************/
+/**************************************************apps field***************************************/
+
+#appsBox
+{
+	background: rgba(255, 255,255, .4);		
+	height: 90%;
+	width: 100%;
+	float:bottom;
+	position:fixed;	
+	margin-left:5px;
+	margin-top:5px;
+	left: 0%;
+	top: 10%;
+	
+	z-index: -1;	
+}
+
+#appLogo
+{
+	background-color:rgba(225,225,225,0.5);
+	width: 100px;
+	height: 100px;
+	float: left;
+	position: relative;
+	margin: 10px;
+}
+
+#appGroup
+{
+	background-color:rgba(78,78,78,0.4);
+	width: 48%;
+	height: 100%;
+	float: left;
+	position:fixed;	
+	margin:10px;
+	margin-left:;
+}

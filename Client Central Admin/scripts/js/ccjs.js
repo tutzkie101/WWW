@@ -8,6 +8,11 @@ function init(pcnid)
 	document.getElementById("details").innerHTML = "<b>sample</b>: details";
 	document.getElementById("footer").innerHTML = "<b>sample</b>: footer";
 	
+	document.getElementById("btnfield").innerHTML = ' PCN content:<input type="submit" value="Update" onClick = submitPageData()>'
+														+'<input type="text" name="PCNID" id="pcnidInput">'
+														+'<input type="submit" value="Add" onClick = AddPageData()>'
+														+'<input type="submit" value="Load" onClick = loadPageData()>';
+	
 	trace("Application started");
 	
 	// Create configuration object
@@ -40,7 +45,7 @@ function init(pcnid)
 	
 	trace("SmartFox API version: " + sfs.version);
 	sfs.connect();
-}
+}//end of function init
 
 //------------------------------------
 // SFS EVENT HANDLERS
@@ -59,19 +64,19 @@ function onConnection(event)
 	{
 		trace("Connection failed: " + (event.errorMessage ? event.errorMessage + " (" + event.errorCode + ")" : "Is the server running at all?"), true);		
 	}
-}
+}//end of onConnection
 
 function onConnectionLost(event)
 {
 	trace("I was disconnected; reason is: " + event.reason);
 	
-}
+}//end of function onConnectionLost
 
 function onLoginError(event)
 {
 	trace("Login error: " + event.errorMessage + " (" + event.errorCode + ")", true);
 	
-}
+}//end of functionOnLoginError
 
 function onLogin(event)
 {
@@ -79,38 +84,37 @@ function onLogin(event)
 		  "\n\tZone: " + event.zone +
 		  "\n\tUser: " + event.user +
 		  "\n\tData: " + event.data);
-	sfs.send(new SFS2X.Requests.System.JoinRoomRequest("internal"));
-	
-		
+	sfs.send(new SFS2X.Requests.System.JoinRoomRequest("internal"));	
 	
 	sfs.enableLagMonitor(true, 5);
-}
+}//end of function onLogin
 
 function onLogout(event)
 {
 	trace("Logout from zone " + event.zone + " performed!");
 	
-}
+}//end of onLogout
 
 function onRoomJoin(event)
 {
 		trace("Sending Request...");
 		var params = {};
 		params.PCNID = "4";
+		document.getElementById("pcnidInput").value = "4";
 		sfs.send(new SFS2X.Requests.System.ExtensionRequest("GET_PAGEDATA", params));
 		trace("Request sent");
-}
+}//end of onRoomJoin
 
 function onRoomJoinError(event)
 {
 	trace("Room Join error: " + event.errorMessage + " (" + event.errorCode + ")", true);
-}
+}//end of onRoomJoinError
 
 function onPingPong(event)
 {
 	var avgLag = Math.round(event.lagValue * 100) / 100;
 	//$("#lagLb").text("Average lag: " + avgLag + "ms");
-}
+}//end of function onPingPong
 
 //------------------------------------
 // OTHER METHODS
@@ -123,7 +127,7 @@ function trace(txt, showAlert)
 	if (showAlert)
 		alert(txt);
 		
-}
+}//end of function trace
 
 
 //-------------------------------------
@@ -145,31 +149,34 @@ function extResponse(evtParams)
 		var footer = document.getElementById("footer");
 		
 		//console.log("The sum is: " + responseParams.sum);
-		subject.innerHTML = '<textarea class = "inputfield" type="text" id="subjecttxt" wrap = "hard" rows = "'+getRowLen(sfsObj.subject)+'">' + sfsObj.subject+'</textarea>';
-		specifics.innerHTML = '<textarea class = "inputfield" type="text" id="specificstxt" wrap = "hard" rows = "'+getRowLen(sfsObj.specifics)+'">' + sfsObj.specifics+'</textarea>';
-		details.innerHTML = '<textarea class = "inputfield" type="text" id="detailstxt" wrap = "hard" rows = "'+getRowLen(sfsObj.details)+'">' + sfsObj.details+'</textarea>';
-		footer.innerHTML = '<textarea class = "inputfield" type="text" id="footertxt" wrap = "hard" rows = "'+getRowLen(sfsObj.footer)+'">' + sfsObj.footer+'</textarea>';		
-		footer.innerHTML += 'Footerid: <input name = "footerid" value ="'+sfsObj.footerID+'"/>';
+		subject.innerHTML = 'Subject: <textarea class = "inputfield" type="text" id="subjecttxt" wrap = "hard" rows = "'+getRowLen(sfsObj.subject)+'">' + sfsObj.subject+'</textarea>';
+		specifics.innerHTML = 'Specifics: <textarea class = "inputfield" type="text" id="specificstxt" wrap = "hard" rows = "'+getRowLen(sfsObj.specifics)+'">' + sfsObj.specifics+'</textarea>';
+		details.innerHTML = 'Details: <textarea class = "inputfield" type="text" id="detailstxt" wrap = "hard" rows = "'+getRowLen(sfsObj.details)+'">' + sfsObj.details+'</textarea>';
+		footer.innerHTML = 'Footer: <textarea class = "inputfield" type="text" id="footertxt" wrap = "hard" rows = "'+getRowLen(sfsObj.footer)+'">' + sfsObj.footer+'</textarea>';		
+		footer.innerHTML += ' Footer:<input type="submit" value="Update" onClick = submitPageData()>'
+						 +'<input name = "footerid" id="footeridtxt" value ="'+sfsObj.footerID+'"/>'
+						 +'<input type="submit" value="Add" onClick = AddPageData()>'
+														+'<input type="submit" value="Load" onClick = loadPageData()>';
 		
-	}
-	
-	/*
-	if(e.params.cmd == "PageData")
+				
+	}else if(evtParams.cmd == "SET_PAGEDATA_SUCCESS")
 	{
-		var resParams = e.params.params as SFSObject;
-		var row = resParams.getSFSArray("row") as SFSArray; 	
+		trace("SET_PAGEDATA SUCCESSFUL!",true);
 		
-		var sfsObj = row.getSFSObject(0) as SFSObject;
+	}else if(evtParams.cmd == "SET_PAGEDATA_FAILURE")
+	{
+		trace("SET_PAGEDATA FAILURE!",true);
 		
-		//trace(sfsObj.getUtfString("PCNid"),true);
+	}else if(evtParams.cmd == "ADD_PAGEDATA_SUCCESS")
+	{
+		trace("ADD_PAGEDATA SUCCESSFUL!",true);
 		
-		document.getElementById("subject").innerHTML = sfsObj.getUtfString("subject");
-		document.getElementById("specifics").innerHTML = sfsObj.getUtfString("specifics");
-		document.getElementById("details").innerHTML = sfsObj.getUtfString("details");
-		document.getElementById("footer").innerHTML = sfsObj.getUtfString("footer");
+	}else if(evtParams.cmd == "ADD_PAGEDATA_FAILURE")
+	{
+		trace("ADD_PAGEDATA FAILURE!",true);
 		
-	}//end of if statement
-	*/
+	}//end of function if else function
+	
 }//end of function extResponse
 
 function getRowLen(txt)
@@ -184,6 +191,52 @@ function getRowLen(txt)
 		return rows+1;
 }//end of function getRowLen
 
+function submitPageData(pcnid)
+{
+	pcnid = document.getElementById("pcnidInput").value;
+		var params = {};
+		params.PCNID = pcnid;		
+		params.SUBJECT = document.getElementById("subjecttxt").value;
+		params.SPECIFICS = document.getElementById("specificstxt").value;
+		params.DETAILS = document.getElementById("detailstxt").value;
+		params.FOOTERID = document.getElementById("footeridtxt").value;//footer actually holds the footerID
+		//trace(document.getElementById("footeridtxt").value,true);
+		sfs.send(new SFS2X.Requests.System.ExtensionRequest("SET_PAGEDATA", params));
+		trace("SET_PAGEDATA Request sent");
+		
+}//end of function submit
+
+function AddPageData(pcnid)
+{
+	pcnid = document.getElementById("pcnidInput").value;
+		var params = {};
+		params.PCNID = pcnid;		
+		params.SUBJECT = document.getElementById("subjecttxt").value;
+		params.SPECIFICS = document.getElementById("specificstxt").value;
+		params.DETAILS = document.getElementById("detailstxt").value;
+		params.FOOTERID = document.getElementById("footeridtxt").value;//footer actually holds the footerID
+		sfs.send(new SFS2X.Requests.System.ExtensionRequest("ADD_PAGEDATA", params));
+		trace("ADD_PAGEDATA Request sent");
+		
+}//end of function submit
+
+function submitFooterData(pcnid)
+{
+	var params = {};
+		params.PCNID = pcnid;		
+		params.footer = document.getElementById("footer").innerHTML;
+		sfs.send(new SFS2X.Requests.System.ExtensionRequest("SET_FOOTERDATA", params));
+		trace("Set_FOOTERDATA Request sent");
+	
+}//end of function submitFooterData
+
+function loadPageData()
+{
+	var params = {};
+		params.PCNID = document.getElementById("pcnidInput").value;
+		sfs.send(new SFS2X.Requests.System.ExtensionRequest("GET_PAGEDATA", params));
+		trace("Request sent");
+}//end of function loadPageData
 
 
 

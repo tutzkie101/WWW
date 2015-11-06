@@ -1,0 +1,50 @@
+
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style:normal;
+	font-weight:normal;
+	color:#666666;	
+}
+
+#subject
+{
+
+	width: 100%;
+	height: 5%;
+	color: red;	
+	font-size:13px;
+	font-style:italic;
+	font-weight:bold;
+}
+
+#specifics
+{
+
+	width: 50%;
+	height: 10%;
+	background-color:rgba(134,134,134,.5);
+	margin: 11px;
+
+}
+
+#details
+{
+
+	width: 100%;
+	height: 10%;
+	margin-left: 11px;
+	
+}
+
+#footer
+{
+
+	width: 100%;
+	height: 10%;
+	font-size:20px;
+	margin-left: 10px;
+	
+}
+

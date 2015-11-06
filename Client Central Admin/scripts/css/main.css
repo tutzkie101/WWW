@@ -25,7 +25,7 @@ body
 	width: 50%;
 	height: 10%;
 	background-color:rgba(134,134,134,.5);
-	margin: 11px;
+	margin: 0px;
 
 }
 
@@ -44,7 +44,7 @@ body
 	width: 100%;
 	height: 10%;
 	font-size:20px;
-	margin-left: 10px;
+	margin-left: 0px;
 	
 }
 
@@ -58,5 +58,16 @@ textarea{
   appearance: none;
   box-shadow: none;
   border-radius: none;
+}
+
+#specificstxt,#detailstxt,#footertxt,#subjecttxt
+{
+	background:rgba(0,0,0,0);	
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style:normal;
+	font-weight:normal;
+	color:#666666;
+	border:none;
 }
 

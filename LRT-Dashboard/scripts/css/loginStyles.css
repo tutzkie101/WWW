@@ -1,0 +1,58 @@
+@charset "utf-8";
+/* CSS Document */
+
+#LoginField
+{
+	
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	font-style:normal;
+	font-weight:normal;
+	color:#333333;
+	
+}
+
+#username
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	font-style:normal;
+	font-weight:bold;
+	color:#333333;
+	height: 8%;
+	width: 100%;
+	margin-top: 10%;
+	margin-left: 10%;
+}
+
+#password
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	font-style:normal;
+	font-weight:bold;
+	color:#333333;
+	height: 8%;
+	width: 100%;
+	margin-top: 10%;
+	margin-left: 10%;
+}
+
+input[type=submit]#submitBtn 
+{
+    background-color:rgba(44,255,20,.8);
+    border: 0;
+    cursor: pointer;
+	
+	height: 10%;
+	width: 80%;
+	margin-top: 15%;
+	margin-left: 10%;
+	
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 48px;
+	font-style:bold;
+	font-weight:normal;
+	color:#000000;
+}
+
