@@ -23,9 +23,6 @@ var SKYTN = SKYTN ||
 			}//end of if else
 			
 			document.getElementById("chatBtn").style.left = widthPer+"%";
-			
-			/**************************chatBox stuff***********************************/
-			
 				document.getElementById("chatBox").style.left = widthPerBox+"%";
 				//document.getElementById("chatBox").innerHTML = "";
 			SKYTN.showUserList();
@@ -33,8 +30,14 @@ var SKYTN = SKYTN ||
 		}//end of function showChatBox
 		
 	}; //initalize namespace
+	
+SKYTN.openAppList = [];
 SKYTN.groupList = [];
 SKYTN.chatShowing = false;
+
+			
+/**************************chatBox stuff***********************************/
+			
 
 SKYTN.chatBox = function()
 {
@@ -197,7 +200,7 @@ SKYTN.event =
 				}
 			};//end of event handler for skytn
 			
-		
+
 
 /*************************** start of dropdown stuff**************************/
 	
@@ -306,6 +309,9 @@ var app = function()
 	this.name = "Sample App";
 	this.externalLink = "#";
 	this.appType = "LINK";	
+	this.html = "";
+	this.style = "";
+	this.scriptSource = "";
 	
 };//end of object app
 
@@ -369,9 +375,94 @@ function gotoPage(pageNum)
 function reStyle(pNum)
 {
 	document.getElementById("sbBtn"+pNum).style = "background-color:rgba(25,54,64,0.4);width: 10px;height: 10px;float:left;position:relative;margin: 2px;border:2px solid;border-radius: 25px;";	
-}
+}//end of function restyle
+
+function loadAppPage(appToLoad)
+{
+	var groupLen = SKYTN.groupList.length;
+	
+	for(var i=0;i<groupLen;i++)
+	{
+		if(SKYTN.groupList[i].getApp(appToLoad)!=null)	
+		{
+			var loadedApp = SKYTN.groupList[i].getApp(appToLoad);
+			
+			if(loadedApp.appType=="LINK")
+			{
+				window.open(loadedApp.externalLink,'_blank');
+			}else if(loadedApp.appType=="APP")
+			{
+				openApp(loadedApp.html);
+			}//end of if else
+			
+		}//end of if statement
+		
+	}//end of for loop
+	
+}//end of function loadAppPage
+
+function openApp(htmlContent)
+{
+		var div = document.createElement("div");        // Create a <button> element
+		var att = document.createAttribute("id");       // Create a "class" attribute
+			att.value = "openAppHolder";                           // Set the value of the class attribute
+			div.setAttributeNode(att);                      // Append the text to <button>
+		document.body.appendChild(div);  
+	
+		document.getElementById("openAppHolder").style = "background: rgba(255, 255,255, .4);height: 90%;width: 100%;float:bottom;position:fixed;margin-left:5px;margin-top:5px;left: 0%;top: 10%;";
+		document.getElementById("openAppHolder").innerHTML = htmlContent;
+			
+}//end of function openApp
 
 /*************************** end of app stuff*******************************/
+
+
+
+/*************************** Start of appControl Buttons********************/
+var closeBtn = function()
+{
+	this.getHtml = function()
+	{
+		var html = "";
+			html += MultiLine(function(){/*
+				<div style="background-color:rgba(255,12,12,0.7);width: 15px;height: 15px;float:right;position:relative;border:1px solid;border-radius: 30px; right:1.5%; top:2%; cursor:pointer; margin: 2px;" onClick=closeApp()>
+				</div>
+			*/});
+		
+		return html;
+	};//end of functio getHtml
+	
+};//end of object closeBtn
+
+
+var minimizeBtn = function()
+{
+	this.getHtml = function()
+	{
+		var html = "";
+			html += MultiLine(function(){/*
+				<div style="background-color:rgba(255,255,12,0.7);width: 15px;height: 15px;float:right;position:relative;border:1px solid;border-radius: 30px; right:1.5%; top:2%; cursor:pointer; margin: 2px;" onClick=minimizApp()>
+				</div>
+			*/});
+		
+		return html;
+	};//end of functio getHtml
+	
+};//end of object minimizeBtn
+
+
+function closeApp()
+{
+	document.getElementById("openAppHolder").remove();
+};//end of function closeApp()
+
+function minimizApp()
+{
+	document.getElementById("openAppHolder").style = "position:fixed;top: 150%;";
+}//end of function minimizeApp()
+
+/*************************** Start of appControl Buttons********************/
+
 
 
 /**************************start of other Functions*************************/

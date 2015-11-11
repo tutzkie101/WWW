@@ -1,9 +1,7 @@
 var LIGHT = LIGHT || {}
 LIGHT.apps = function()
 {
-	
-	this.getApp
-		
+			
 }//end of class
 
 
@@ -22,6 +20,25 @@ function initiate()
         fileref2.setAttribute("href", "scripts/css/mainMenuStyles.css");
 	 document.getElementsByTagName("head")[0].appendChild(fileref); 
 	 document.getElementsByTagName("head")[0].appendChild(fileref2);
+	 
+	var fileref3=document.createElement("script");
+	//fileref3.setAttribute("rel", "stylesheet");
+	fileref3.setAttribute("type", "text/javascript");
+	fileref3.setAttribute("src", "scripts/js/AppsGroupsControl.js");
+	 document.getElementsByTagName("head")[0].appendChild(fileref3); 
+	 
+	 var fileref4=document.createElement("script");
+	//fileref4.setAttribute("rel", "stylesheet");
+	fileref4.setAttribute("type", "text/javascript");
+	fileref4.setAttribute("src", "apps/NSsalesOrder.js");
+	 document.getElementsByTagName("head")[0].appendChild(fileref4); 
+	 
+	 var fileref5=document.createElement("script");
+	fileref5.setAttribute("type", "text/javascript");
+	fileref5.setAttribute("src", "apps/NStimecard.js");
+	 document.getElementsByTagName("head")[0].appendChild(fileref5); 
+	 
+	 
 	 
 	initSFS();///this initiates smartfox and all other elements
 }//end of load function
@@ -81,6 +98,10 @@ function loadOfflinePage()
 
 function loadMainPage()
 {
+
+	var AGC = new loadedUserGroup();
+	SKYTN.groupList = AGC.getGroupsWithApps();
+	/*
 	//to be removed
 	var sampleApp = new app();
 		sampleApp.name = "Timecard App";	
@@ -91,6 +112,8 @@ function loadMainPage()
 		oppApp.name = "NS Sales Order";	
 		oppApp.externalLink = "http://10.7.0.25:85/TimeApp-v2.2.1/index.php";
 		oppApp.appID = 11;
+		oppApp.appType = "APP";
+		oppApp.html = "TEST CONTENT";
 	
 	var sampleGroup = new appGroup();
 	sampleGroup.name = "Emp Group";
@@ -106,11 +129,11 @@ function loadMainPage()
 	
 	var otherGroup = new appGroup();
 	
-	SKYTN.groupList = [sampleGroup,oppsGroup,otherGroup];
-	
+	SKYTN.groupList = [sampleGroup,oppsGroup,otherGroup]; //apply group to global variable
+	*/
 	var chatBox = new SKYTN.chatBox();
 	var someStuf = 100000;
-	var appGrp = new Groups();
+	var appGrp = new Groups();//you might be wondering but the group is applied to the gloabal variable
 	var scrBr = new scrollBar();
 	var htmlString = MultiLine(function(){/*
 				<header >	
@@ -134,7 +157,7 @@ function loadMainPage()
             </a>
         </header>
         
-        <section>
+        <section id="menuBody">
         	<div  style="position:relative;">
                 <div  id="appsBox">
 				*/})
@@ -159,26 +182,6 @@ function loadMainPage()
 		
 }//end of function loadMainPage
 
-function loadAppPage(appToLoad)
-{
-	var groupLen = SKYTN.groupList.length;
-	
-	for(var i=0;i<groupLen;i++)
-	{
-		if(SKYTN.groupList[i].getApp(appToLoad)!=null)	
-		{
-			var loadedApp = SKYTN.groupList[i].getApp(appToLoad);
-			
-			if(loadedApp.appType=="LINK")
-			{
-				window.open(loadedApp.externalLink,'_blank');
-			}//end of if 
-			
-		}//end of if statement
-		
-	}//end of for loop
-	
-}//end of function loadAppPage
 
 function streamIn()
 {
